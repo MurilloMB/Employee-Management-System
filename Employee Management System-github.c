@@ -2,8 +2,12 @@
 #include<string.h>
 #include<stdlib.h>
 #include<math.h>
+#include<conio.h>
+#include<string.h>
 
-#define Employee struct emp
+#define filename "employeeInfo.txt"
+#define temp_filename "temp.txt"
+#define LENGTH 10
 //sohanuzzaman_soad
 void add(FILE * fp); //to add to list
 FILE * del(FILE * fp);//to delete from list
@@ -12,9 +16,20 @@ void displayList(FILE * fp);//display whole list
 void searchRecord(FILE *fp);//find a particular record
 void printChar(char ch,int n);//printing a character ch n times
 void printHead();
+void welcome();
+void displaybasic(FILE * fp);
+void basiccontact(FILE * fp);
+void maleemp(FILE * fp);
+void femaleemp(FILE * fp);
+void frmdhaka(FILE * fp);
+void frmors(FILE * fp);
+void mainbr(FILE * fp);
+void otherbr(FILE * fp);
+
+
 //sohanuzzaman_soad
 
-struct emp
+typedef struct Employee
 {
     int id;
     char name[100];
@@ -27,126 +42,136 @@ struct emp
     char prtaddr[200];
     char phone[15];
     char mail[20];
-};
+} Employee;
 //sohanuzzaman_soad
 
 int main()
 {
- FILE * fp;
- Employee e;
-int option;
-char another;
 
-if((fp=fopen("employeeInfo.txt","rb+"))==NULL) //sohanuzzaman_soad
-{
-    if((fp=fopen("employeeInfo.txt","wb+"))==NULL)
-       {
-           printf("can't open file");
-           return 0;
-       }
-}
-char username[10],password[10]; //sohanuzzaman_soad
-printHead();
-welcome();
-printHead();
-printf("\n\t\t\t\t  Login Screen");
-printf("\n\t\t\t      Enter Your Credential");
-printf("\n\n\n\t\tUsername: ");
-scanf("%s",username);
-printf("\n\t\tPassword: ");
-int i;
-i=0;
-	do
-	{
-		password[i] = getch();
-		if(password[i] == 13 )//sohanuzzaman_soad
-		{
-			break;
-		}
-		else if(password[i]==8 && i>0)
-		{
-			printf("%c%c%c",8,32,8);
-			i--;
-		}
-		else
-		{
-			printf("*");
-			i++;
-		}
-	}while(password[i]!=13);
-	password[i] = '\0';
-
-if(((strcasecmp(username,"admin"))==0)&&((strcasecmp(password,"pass")==0)))
-{
-    while(1)
-{
-    printHead();
-    printf("\n\t\t\t\tMain Menu");
-    printf("\n\n\n");//sohanuzzaman_soad
+        
+    FILE * fp = NULL;
+    Employee e;
+    int option;
+    char another;
 
 
-    printf("\n\n\t\t\t1. Add Employee");
-    printf("\n\n\t\t\t2. Delete Employee");
-    printf("\n\n\t\t\t3. Modify Employee");
-    printf("\n\n\t\t\t4. Display Employee List");
-    printf("\n\n\t\t\t5. Search Record");
-    printf("\n\n\t\t\t6. Display Basic Info");
-    printf("\n\n\t\t\t7. Display Basic Contact Info");
-    printf("\n\n\t\t\t8. List of Male Employee");
-    printf("\n\n\t\t\t9. List of Female Employee");
-    printf("\n\n\t\t\t10. List of Employee From Dhaka");
-    printf("\n\n\t\t\t11. List of Employee From Others District");
-    printf("\n\n\t\t\t12. List of Employee of Main Branch");
-    printf("\n\n\t\t\t13. List of Employee of Others Branch");
-    printf("\n\n\t\t\t0. EXIT");
+    fopen_s(&fp, filename, "rb+");
 
-    printf("\n\n\t\tEnter Your Option :--> ");
-    scanf("%d",&option);
-//sohanuzzaman_soad
-    switch(option)
+    if(fp==NULL) //sohanuzzaman_soad
     {
-        case 0: return 1;
-                break;
-        case 1: add(fp);
-                break;
-        case 2: fp=del(fp);
-                break;
-        case 3: modify(fp);
-                break;
-        case 4: displayList(fp);
-                break;
-        case 5: searchRecord(fp);
-                break;
-        case 6: displaybasic(fp);
-                break;//sohanuzzaman_soad
-        case 7: basiccontact(fp);
-                break;
-        case 8: maleemp(fp);
-                break;
-        case 9: femaleemp(fp);
-                break;
-        case 10: frmdhaka(fp);
-                break;
-        case 11: frmors(fp);
-                break;
-        case 12: mainbr(fp);
-                break;
-        case 13: otherbr(fp);
-                break;
-        default: printf("\n\t\tYou Pressed wrong key");
-                  printf("\n\t\tProgram terminated");
-                  getch();
-                  exit(0);
+        fopen_s(&fp, filename, "wb+");
+        if(fp==NULL)
+        {
+            printf("can't open file");
+            fclose(fp);
+            return 0;
+        }
+    }
 
-    }//sohanuzzaman_soad
-}
-}
-else {
-    printf("\n\t\tLogin Failed");
-}
+    char username[LENGTH],password[LENGTH]; //sohanuzzaman_soad
+    printHead();
+    welcome();
+    printHead();
+    printf("\n\t\t\t\t  Login Screen");
+    printf("\n\t\t\t      Enter Your Credential");
+    printf("\n\n\n\t\tUsername: ");
+    scanf_s("%s",username, sizeof(username));
+    printf("\n\t\tPassword: ");
+    int i;
+    i=0;
+        do
+        {
+            password[i] = _getch();
+            if(password[i] == 13 )//sohanuzzaman_soad
+            {
+                break;
+            }
+            else if(password[i]==8 && i>0)
+            {
+                printf("%c%c%c",8,32,8);
+                i--;
+            }
+            else
+            {
+                printf("*");
+                i++;
+            }
+        }while(password[i]!=13);
+        password[i] = '\0';
+
+    if(((strcmp(username,"admin"))==0)&&((strcmp(password,"pass")==0)))
+    {
+        while(1)
+    {
+        printHead();
+        printf("\n\t\t\t\tMain Menu");
+        printf("\n\n\n");//sohanuzzaman_soad
 
 
-return 1;
+        printf("\n\n\t\t\t1. Add Employee");
+        printf("\n\n\t\t\t2. Delete Employee");
+        printf("\n\n\t\t\t3. Modify Employee");
+        printf("\n\n\t\t\t4. Display Employee List");
+        printf("\n\n\t\t\t5. Search Record");
+        printf("\n\n\t\t\t6. Display Basic Info");
+        printf("\n\n\t\t\t7. Display Basic Contact Info");
+        printf("\n\n\t\t\t8. List of Male Employee");
+        printf("\n\n\t\t\t9. List of Female Employee");
+        printf("\n\n\t\t\t10. List of Employee From Dhaka");
+        printf("\n\n\t\t\t11. List of Employee From Others District");
+        printf("\n\n\t\t\t12. List of Employee of Main Branch");
+        printf("\n\n\t\t\t13. List of Employee of Others Branch");
+        printf("\n\n\t\t\t0. EXIT");
+
+        printf("\n\n\t\tEnter Your Option :--> ");
+        scanf_s("%d",&option, sizeof(option));
+    //sohanuzzaman_soad
+        switch(option)
+        {
+            case 0: return 1;
+                    break;
+            case 1: add(fp);
+                    break;
+            case 2: fp=del(fp);
+                    break;
+            case 3: modify(fp);
+                    break;
+            case 4: displayList(fp);
+                    break;
+            case 5: searchRecord(fp);
+                    break;
+            case 6: displaybasic(fp);
+                    break;//sohanuzzaman_soad
+            case 7: basiccontact(fp);
+                    break;
+            case 8: maleemp(fp);
+                    break;
+            case 9: femaleemp(fp);
+                    break;
+            case 10: frmdhaka(fp);
+                    break;
+            case 11: frmors(fp);
+                    break;
+            case 12: mainbr(fp);
+                    break;
+            case 13: otherbr(fp);
+                    break;
+            default: printf("\n\t\tYou Pressed wrong key");
+                    printf("\n\t\tProgram terminated");
+                    _getch();
+                    exit(0);
+
+        }//sohanuzzaman_soad
+    }
+    }
+    else {
+        printf("\n\t\tLogin Failed");
+    }
+
+    fclose(fp);
+
+
+    return 1;
 
 }
 
@@ -190,7 +215,7 @@ void add(FILE * fp)
 {
 printHead();
 
-printf("\n\t\t\t\Add Employee");
+printf("\n\t\t\tAdd Employee");
 char another='y';
 Employee e;
 
@@ -198,7 +223,7 @@ fseek(fp,0,SEEK_END);
 while(another=='y'||another=='Y')
 {
     printf("\n\n\t\tEnter ID number: ");
-    scanf("%d",&e.id);
+    scanf_s("%d",&e.id, sizeof(e.id));
 //sohanuzzaman_soad
     printf("\n\n\t\tEnter Full Name of Employee: ");
     fflush(stdin);
@@ -224,7 +249,7 @@ while(another=='y'||another=='Y')
 
 
     printf("\n\n\t\tEnter Salary: ");
-    scanf("%f",&e.sal);
+    scanf_s("%f",&e.sal, sizeof(e.sal));
 
     printf("\n\n\t\tEnter Present Address: ");
     fflush(stdin);
@@ -259,21 +284,24 @@ while(another=='y'||another=='Y')
 FILE * del(FILE * fp)
 {
  printHead();
-printf("\n\t\t\t\Delete Employee");
+printf("\n\t\t\tDelete Employee");
 Employee e;
 int flag=0,tempid,siz=sizeof(e);
 FILE *ft;
 
-if((ft=fopen("temp.txt","wb+"))==NULL)//sohanuzzaman_soad
+fopen_s(&ft, temp_filename, "wb+");
+
+if(ft==NULL)//sohanuzzaman_soad
 {
     printf("\n\n\t\t\t\\t!!! ERROR !!!\n\t\t");
+    fclose(ft);
     system("pause");
-     return fp;
+    return fp;
 }
 
 printf("\n\n\tEnter ID number of Employee to Delete the Record");
 printf("\n\n\t\t\tID No. : ");
-scanf("%d",&tempid);
+scanf_s("%d",&tempid, sizeof(tempid));
 
 rewind(fp);
 
@@ -294,12 +322,14 @@ while((fread(&e,siz,1,fp))==1)
 fclose(fp);
 fclose(ft);
 
-remove("employeeInfo.txt");
-rename("temp.txt","employeeInfo.txt");
+remove(filename);
+rename(temp_filename,filename);
 
-if((fp=fopen("employeeInfo.txt","rb+"))==NULL)//sohanuzzaman_soad
+fopen_s(&fp, filename, "rb+");
+if(fp==NULL)//sohanuzzaman_soad
 {
     printf("ERROR");
+    fclose(fp);
     return  NULL;
 }
 
@@ -317,13 +347,13 @@ return fp;
 void modify(FILE * fp)
 {
 printHead();
-printf("\n\t\t\t\Modify Employee");
+printf("\n\t\t\tModify Employee");
 Employee e;
 int i,flag=0,tempid,siz=sizeof(e);
 float sal;
 
 printf("\n\n\tEnter ID Number of Employee to Modify the Record : ");
-scanf("%d",&tempid);
+scanf_s("%d",&tempid, sizeof(tempid));
 
 rewind(fp);
 
@@ -342,7 +372,7 @@ if(flag==1)
     printf("\n\n\t\tEnter New Data for the Record");
 
      printf("\n\n\t\tEnter ID number: ");
-    scanf("%d",&e.id);
+    scanf_s("%d",&e.id, sizeof(e.id));
 
     printf("\n\n\t\tEnter Full Name of Employee: ");
     fflush(stdin);
@@ -368,7 +398,7 @@ if(flag==1)
 
 
     printf("\n\n\t\tEnter Salary: ");
-    scanf("%f",&e.sal);
+    scanf_s("%f",&e.sal, sizeof(e.sal));
 
     printf("\n\n\t\tEnter Present Address: ");
     fflush(stdin);
@@ -403,7 +433,7 @@ system("pause");
 //====================DISPLAY THE LIST =================
 void displayList(FILE * fp)
 {   printHead();
-printf("\n\t\t\t\List  of Employees");
+printf("\n\t\t\tList  of Employees");
     Employee e;
     int i,siz=sizeof(e);
 
@@ -432,7 +462,7 @@ printf("\n\t\t\t\List  of Employees");
 //================SEARCH EMPLOYEE==
 void searchRecord(FILE *fp)//sohanuzzaman_soad
 {printHead();
-printf("\n\t\t\t\Search Employee");
+printf("\n\t\t\tSearch Employee");
 int tempid,flag,siz,i;
 Employee e;
 char another='y';
@@ -442,7 +472,7 @@ siz=sizeof(e);
 while(another=='y'||another=='Y')
 {
 printf("\n\n\tEnter ID Number of Employee to search the record : ");
-scanf("%d",&tempid);
+scanf_s("%d",&tempid, sizeof(tempid));
 
 rewind(fp);//sohanuzzaman_soad
 
@@ -482,7 +512,7 @@ another=getchar();
 void maleemp(FILE * fp)
 {
     printHead();
-    printf("\n\t\t\t\List of Male Employee");
+    printf("\n\t\t\tList of Male Employee");
     Employee e;
     int i,siz=sizeof(e);
 
@@ -512,7 +542,7 @@ void maleemp(FILE * fp)
 void femaleemp(FILE * fp)
 {
     printHead();
-     printf("\n\t\t\t\List of Female Employee");
+     printf("\n\t\t\tList of Female Employee");
     Employee e;
     int i,siz=sizeof(e);
 
@@ -540,7 +570,7 @@ void femaleemp(FILE * fp)
 void frmdhaka(FILE * fp)
 {
     printHead();
-     printf("\n\t\t\t\List of Employee From Dhaka");//sohanuzzaman_soad
+     printf("\n\t\t\tList of Employee From Dhaka");//sohanuzzaman_soad
     Employee e;
     int i,siz=sizeof(e);
 
@@ -568,7 +598,7 @@ void frmdhaka(FILE * fp)
 void frmors(FILE * fp)
 {
     printHead();
-    printf("\n\t\t\t\List of Employee From Others District");
+    printf("\n\t\t\tList of Employee From Others District");
     Employee e;
     int i,siz=sizeof(e);
 
@@ -576,7 +606,7 @@ void frmors(FILE * fp)
 
     while((fread(&e,siz,1,fp))==1)
     {
-        if((strstr(e.prtaddr,"Dhaka")==1)&&(strstr(e.prtaddr,"dhaka")==1)&&(strstr(e.prtaddr,"DHAKA")==1))
+        if((strstr(e.prtaddr,"Dhaka")==NULL)&&(strstr(e.prtaddr,"dhaka")==NULL)&&(strstr(e.prtaddr,"DHAKA")==NULL))
         {
         printf("\n\n\t\tID : %d",e.id);
         printf("\n\n\t\tNAME : %s",e.name);
@@ -595,7 +625,7 @@ void frmors(FILE * fp)
 
 void displaybasic(FILE * fp)
 {   printHead();//sohanuzzaman_soad
-printf("\n\t\t\t\Display Basic Information");
+printf("\n\t\t\tDisplay Basic Information");
     Employee e;
     int i,siz=sizeof(e);
 
@@ -621,7 +651,7 @@ printf("\n\t\t\t\Display Basic Information");
 
 void basiccontact(FILE * fp)
 {   printHead();
-printf("\n\t\t\t\Basic Contact Information");
+printf("\n\t\t\tBasic Contact Information");
     Employee e;
     int i,siz=sizeof(e);
 
@@ -647,7 +677,7 @@ printf("\n\t\t\t\Basic Contact Information");
 void mainbr(FILE * fp)
 {
     printHead();
-    printf("\n\t\t\t\List of Employee of Main Branch");
+    printf("\n\t\t\tList of Employee of Main Branch");
     Employee e;
     int i,siz=sizeof(e);
 
@@ -675,7 +705,7 @@ void mainbr(FILE * fp)
 void otherbr(FILE * fp)
 {
     printHead();
-    printf("\n\t\t\t\List of Employee of Other Branch");//sohanuzzaman_soad
+    printf("\n\t\t\tList of Employee of Other Branch");//sohanuzzaman_soad
     Employee e;
     int i,siz=sizeof(e);
 
